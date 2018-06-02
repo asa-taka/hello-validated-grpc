@@ -6,11 +6,13 @@ import (
 	"log"
 	"net"
 	"sync"
+	"time"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
 	pb "github.com/asa-taka/hello-validated-grpc/api"
+	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -29,7 +31,11 @@ func newServer() *greetingServer {
 // GetFeature returns the feature at the given point.
 func (s *greetingServer) Hello(ctx context.Context, req *pb.GreetingRequest) (*pb.GreetingResponse, error) {
 	msg := fmt.Sprintf("Hello, %s.", req.GetName())
-	return &pb.GreetingResponse{Message: msg}, nil
+	now, _ := ptypes.TimestampProto(time.Now())
+	return &pb.GreetingResponse{
+		Message: msg,
+		Date:    now,
+	}, nil
 }
 
 func main() {
