@@ -1,14 +1,16 @@
 syntax = "proto3";
 package hello;
 
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+
 service GreetingService {
   rpc Hello(GreetingRequest) returns (GreetingResponse);
 }
 
 message GreetingRequest {
-  string name = 1;
+  string name = 1 [(validator.field) = {string_not_empty: true}];
 }
 
 message GreetingResponse {
-  string message = 1;
+  string message = 1 [(validator.field) = {string_not_empty: true}];
 }

@@ -11,7 +11,6 @@ import (
 	"google.golang.org/grpc"
 
 	pb "github.com/asa-taka/hello-validated-grpc/api"
-	"google.golang.org/grpc/reflection"
 )
 
 var (
@@ -42,8 +41,8 @@ func main() {
 	s := grpc.NewServer(opts...)
 	pb.RegisterGreetingServiceServer(s, newServer())
 
-	log.Printf("Register reflection service")
-	reflection.Register(s)
+	// log.Printf("Register reflection service")
+	// reflection.Register(s)
 
 	log.Printf("gRPC Server start to listen on localhost:%d", *port)
 	s.Serve(lis)
